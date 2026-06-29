@@ -1,20 +1,45 @@
 [build-system]
-requires = ["uv_build>=0.9.6,<0.10.0"]
+requires = [
+    "uv_build>=0.9.6,<0.10.0",
+]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
-source-include = ["tests/"]
+source-include = [
+    "tests/",
+]
 module-name = "cachecontrol"
 module-root = ""
 
+[tool.mypy]
+show_error_codes = true
+strict = true
+enable_error_code = [
+    "ignore-without-code",
+    "redundant-expr",
+    "truthy-bool",
+]
+overrides = [
+    { module = "msgpack", ignore_missing_imports = true },
+]
+
+[tool.pytest.ini_options]
+norecursedirs = [
+    "bin",
+    "lib",
+    "include",
+    "build",
+]
 
 [project]
 name = "CacheControl"
-version = "0.14.4"
+version = "0.14.4+lineaje.1"
 description = "httplib2 caching for requests"
 readme = "README.rst"
 license = "Apache-2.0"
-license-files = ["LICENSE.txt"]
+license-files = [
+    "LICENSE.txt",
+]
 authors = [
     { name = "Eric Larson", email = "ericlarson@ionrock.com" },
     { name = "Frost Ming", email = "me@frostming.com" },
@@ -31,26 +56,38 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
     "Topic :: Internet :: WWW/HTTP",
 ]
-keywords = ["requests", "http", "caching", "web"]
-dependencies = ["requests >= 2.16.0", "msgpack >= 0.5.2, < 2.0.0"]
+keywords = [
+    "requests",
+    "http",
+    "caching",
+    "web",
+]
+dependencies = [
+    "requests >= 2.16.0",
+    "msgpack >= 0.5.2, < 2.0.0",
+]
 requires-python = ">=3.10"
+maintainers = [
+    { name = "Lineaje DepFixer", email = "221268890+Lineaje-DepFixer@users.noreply.github.com" },
+]
 
 [project.urls]
-Homepage = "https://pypi.org/project/CacheControl/"
+Homepage = "https://github.com/lineaje-labs-gos/psf-cachecontrol"
 Issues = "https://github.com/psf/cachecontrol/issues"
 Source = "https://github.com/psf/cachecontrol"
+Repository = "https://github.com/lineaje-labs-gos/psf-cachecontrol"
+Tracker = "https://github.com/lineaje-labs-gos/psf-cachecontrol/issues"
 
 [project.optional-dependencies]
-# End-user extras.
-filecache = ["filelock >= 3.8.0"]
-redis = ["redis>=2.10.5"]
-
-# Development extras.
+filecache = [
+    "filelock >= 3.8.0",
+]
+redis = [
+    "redis>=2.10.5",
+]
 dev = [
     "CacheControl[filecache,redis]",
     "cherrypy",
-    # See: https://github.com/cherrypy/cherrypy/issues/2070
-    # See: https://github.com/cherrypy/cheroot/issues/769
     "cheroot >= 11.1.2",
     "codespell",
     "furo",
@@ -66,15 +103,3 @@ dev = [
 
 [project.scripts]
 doesitcache = "cachecontrol._cmd:main"
-
-[tool.mypy]
-show_error_codes = true
-strict = true
-enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
-
-[[tool.mypy.overrides]]
-module = "msgpack"
-ignore_missing_imports = true
-
-[tool.pytest.ini_options]
-norecursedirs = ["bin", "lib", "include", "build"]
